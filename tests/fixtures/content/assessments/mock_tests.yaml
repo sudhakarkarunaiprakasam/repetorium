@@ -1,0 +1,7 @@
+method: skill_exam
+default_exam: comprehensive_map
+exams:
+  - id: comprehensive_map
+    title: Sample Full-Map Exam
+    all_skills: true
+    minutes: 20

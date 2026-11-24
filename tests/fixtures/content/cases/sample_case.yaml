@@ -1,0 +1,34 @@
+id: sample-application
+title: Sample application
+archetype: Evidence review
+summary: "A short synthetic case for automated tests."
+minutes: 15
+prompt: "A team records {count} observations over {hours} hours. Calculate the observation rate."
+variants:
+  - count: 12
+    hours: 3
+derived:
+  rate: "count / hours"
+model_structure: "Compare the count with the observation interval."
+model_recommendation: "Report the rate with its unit."
+data:
+  - category: Observation
+    title: Recorded observations
+    text: "The team records observations during three equal intervals."
+    table:
+      headers: [Interval, Observations]
+      rows:
+        - [1, 4]
+        - [2, 4]
+        - [3, 4]
+questions:
+  - prompt: "What is the rate per hour?"
+    answer: "rate"
+    unit: "units/hour"
+    tolerance: 0
+    abs_tolerance: 0
+    skill: sample.root
+    solution: "Divide the count by the number of hours."
+rubric_skills:
+  math: [sample.root]
+case_skills: [sample.related]

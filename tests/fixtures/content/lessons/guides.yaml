@@ -1,0 +1,73 @@
+sample.root:
+  definition: "A rate compares an amount with a unit of time or quantity."
+  when_to_use: "Use it when comparing observations made over different intervals."
+  steps:
+    - "Identify the amount being measured."
+    - "Identify the unit or interval."
+    - "Compare values using the same unit."
+  example:
+    - "Four units in two hours is two units per hour."
+  pitfalls:
+    - "Do not compare rates with different units."
+  decision_tree:
+    - question: "Are the measurement intervals equal?"
+      "yes": "Compare the amounts."
+      "no": "Convert them to a common rate."
+sample.followup:
+  definition: "A relative change compares a difference with the starting value."
+  when_to_use: "Use it to compare changes from different baselines."
+  steps:
+    - "Subtract the starting value from the ending value."
+    - "Divide the difference by the starting value."
+  example:
+    - "A change from 10 to 12 is a 20 percent increase."
+  pitfalls:
+    - "The starting value is the denominator."
+  decision_tree:
+    - question: "Is the starting value nonzero?"
+      "yes": "Calculate the relative change."
+      "no": "Report the absolute change."
+sample.choice:
+  definition: "Evidence supports a claim when it is relevant and reproducible."
+  when_to_use: "Use it when selecting between competing explanations."
+  steps:
+    - "Identify the claim."
+    - "Check whether the observation bears on the claim."
+  example:
+    - "Independent measurements can test whether a result repeats."
+  pitfalls:
+    - "Anecdotes alone do not establish a general pattern."
+  decision_tree:
+    - question: "Does the observation measure the stated outcome?"
+      "yes": "Evaluate its reliability."
+      "no": "Seek a relevant observation."
+sample.additional:
+  definition: "A portion expresses a part relative to a whole."
+  when_to_use: "Use it when finding how much of a total belongs to one part."
+  steps:
+    - "Identify the whole amount."
+    - "Identify the proportion."
+    - "Multiply the whole by the proportion."
+  example:
+    - "Twenty percent of 50 is 10."
+  pitfalls:
+    - "Convert a percentage to a proportion before multiplying."
+  decision_tree:
+    - question: "Is the proportion expressed as a percent?"
+      "yes": "Divide it by 100 before multiplying."
+      "no": "Use the proportion as given."
+sample.related:
+  definition: "An application uses a principle in a new context."
+  when_to_use: "Use it to check whether an idea helps explain a second situation."
+  steps:
+    - "Identify the principle."
+    - "Identify the new context."
+    - "Compare how the principle operates in both."
+  example:
+    - "A rate can compare output across two different processes."
+  pitfalls:
+    - "Do not assume that similar measurements imply identical causes."
+  decision_tree:
+    - question: "Does the second context use a comparable measure?"
+      "yes": "Compare the application."
+      "no": "Choose a measure that fits the context."

@@ -1,0 +1,19 @@
+entries:
+  - skill: sample.choice
+    prompt: "Which observation supports the claim?"
+    correct: "A repeated measurement"
+    distractors: ["An unrelated opinion", "An unsupported guess"]
+    explain: "Repeated measurements provide evidence relevant to the claim."
+    follow_up_prompt: "What additional measurement would reduce uncertainty?"
+  - skill: sample.choice
+    prompt: "Which result is most useful?"
+    correct: "A controlled comparison"
+    distractors: ["A single anecdote", "An unrecorded impression"]
+    explain: "A controlled comparison isolates the factor being evaluated."
+    follow_up_prompt: "Which factor would you hold constant in another setting?"
+  - skill: sample.choice
+    prompt: "Which evidence is strongest?"
+    correct: "A result replicated independently"
+    distractors: ["A result recalled later", "A result with no baseline"]
+    explain: "Independent replication checks whether the result is robust."
+    follow_up_prompt: "How might you check that replication used comparable conditions?"

@@ -1,0 +1,5 @@
+- source: sample.root
+  target: sample.related
+  kind: application
+  strength: 0.8
+  note: "Both apply a measured quantity to a practical situation."

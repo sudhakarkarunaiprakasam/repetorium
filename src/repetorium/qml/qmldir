@@ -1,0 +1,27 @@
+module Repetorium.App
+singleton Theme 1.0 Theme.qml
+AboutCreditsPage 1.0 AboutCreditsPage.qml
+AboutPage 1.0 AboutPage.qml
+AnswerInput 1.0 AnswerInput.qml
+BrandActionButton 1.0 BrandActionButton.qml
+Card 1.0 Card.qml
+ChartView 1.0 ChartView.qml
+CodeBlock 1.0 CodeBlock.qml
+ContentBlock 1.0 ContentBlock.qml
+CreditsPage 1.0 CreditsPage.qml
+DashboardPage 1.0 DashboardPage.qml
+DataTable 1.0 DataTable.qml
+DecisionFlow 1.0 DecisionFlow.qml
+KnowledgeLibraryPage 1.0 KnowledgeLibraryPage.qml
+KnowledgeMapPage 1.0 KnowledgeMapPage.qml
+Label 1.0 Label.qml
+LessonGuide 1.0 LessonGuide.qml
+Main 1.0 Main.qml
+MathText 1.0 MathText.qml
+MockCasePage 1.0 MockCasePage.qml
+MockExamPage 1.0 MockExamPage.qml
+MockTestPage 1.0 MockTestPage.qml
+PracticePage 1.0 PracticePage.qml
+SettingInfoButton 1.0 SettingInfoButton.qml
+SettingsPage 1.0 SettingsPage.qml
+StatCard 1.0 StatCard.qml

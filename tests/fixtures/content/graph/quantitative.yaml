@@ -1,0 +1,39 @@
+- id: sample.root
+  title: Base rate
+  generator: unit_rates
+  domains: [quantitative]
+  lesson:
+    - "A rate compares a measured quantity with a stated unit."
+
+- id: sample.followup
+  title: Rate change
+  generator: pct_change
+  domains: [quantitative]
+  prereqs: [sample.root]
+  encompasses:
+    sample.root: 0.5
+  lesson:
+    - "Compare the change with the starting value."
+
+- id: sample.choice
+  title: Evidence choice
+  generator: bank_choice
+  params:
+    bank: sample
+  domains: [reasoning]
+  lesson:
+    - "Choose the response supported by the evidence."
+
+- id: sample.related
+  title: Related application
+  generator: compound_growth
+  domains: [science]
+  lesson:
+    - "Apply a measured change to an accumulated quantity."
+
+- id: sample.additional
+  title: Additional observation
+  generator: pct_of
+  domains: [reasoning]
+  lesson:
+    - "Relate a portion to the whole quantity."
