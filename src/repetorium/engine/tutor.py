@@ -148,8 +148,24 @@ class Tutor:
         return not st.mastered and all(
             self.states[p].mastered for p in self.graph.skills[skill_id].prereqs)
 
+    def _pack_practice_enabled(self, skill_id: str) -> bool:
+        """Whether settings include this skill's pack in practice and reviews."""
+        selected_ids = self.store.get("setting.content_pack_ids")
+        if not isinstance(selected_ids, list):
+            return True
+        pack_id = self.graph.skill_pack_ids.get(skill_id)
+        if not pack_id:
+            return True
+        if pack_id not in selected_ids:
+            return False
+        goals = self.store.get("setting.content_pack_weekly_goals", {})
+        if not isinstance(goals, dict):
+            return True
+        return goals.get(pack_id, 1) > 0
+
     def frontier(self) -> list[str]:
-        return [s for s in self.graph.topological_order if self.is_available(s)]
+        return [s for s in self.graph.topological_order
+                if self.is_available(s) and self._pack_practice_enabled(s)]
 
     def mastered(self) -> list[str]:
         return [s for s, st in self.states.items() if st.mastered]
@@ -183,6 +199,9 @@ class Tutor:
             sid = queue.pop(0)
             if sid not in self.states:
                 continue
+            if not self._pack_practice_enabled(sid):
+                pending.append(sid)
+                continue
             title = self.graph.skills[sid].title
             if self.states[sid].mastered:
                 task = Task("review", [sid], f"Refresher: {title}")
@@ -207,7 +226,8 @@ class Tutor:
         return Task("quiz", picks, f"Mixed quiz · {label}", difficulty=difficulty)
 
     def _review_or_lesson(self, now: float) -> Task | None:
-        due = self.scheduler.due_skills(now)
+        due = [sid for sid in self.scheduler.due_skills(now)
+               if self._pack_practice_enabled(sid)]
         frontier = self.frontier()
         last_cat = self.category(self.history[-1][1]) if self.history else None
         recent_kinds = [k for k, _ in self.history[-2:]]
@@ -215,7 +235,8 @@ class Tutor:
             return self._due_review_task(now, due, last_cat)
         if frontier:
             return self._lesson_task(frontier)
-        mastered = self.mastered()
+        mastered = [sid for sid in self.mastered()
+                    if self._pack_practice_enabled(sid)]
         if mastered:
             best = min(mastered, key=lambda s: self.states[s].due or 0)
             return Task("review", [best], f"Review ahead: {self.graph.skills[best].title}")
@@ -225,6 +246,7 @@ class Tutor:
         self, now: float, due: list[str] | None = None, last_category: str | None = None,
     ) -> Task | None:
         due = due if due is not None else self.scheduler.due_skills(now)
+        due = [sid for sid in due if self._pack_practice_enabled(sid)]
         if not due:
             return None
         if last_category is None and self.history:
@@ -360,11 +382,22 @@ class Tutor:
             return [
                 skill_id for skill_id in self.graph.topological_order
                 if skill_id not in planned
+                and self._pack_practice_enabled(skill_id)
                 and all(prerequisite in planned
                         for prerequisite in self.graph.skills[skill_id].prereqs)
             ]
 
+        # Keep the first plan entry identical to the lesson Learn would start
+        # now. Pack goals shape the rest of the preview, not this first pick.
+        first_task = self._lesson_task(self.frontier())
+        if first_task is not None:
+            first_skill = first_task.skill_ids[0]
+            plan.append(first_skill)
+            planned.add(first_skill)
+
         for pack_id in pack_slots:
+            if len(plan) >= plan_limit:
+                break
             frontier = [
                 skill_id for skill_id in remaining_frontier()
                 if self.graph.skill_pack_ids.get(skill_id) == pack_id
@@ -748,7 +781,10 @@ class Tutor:
     # ----- reporting -----
     def dashboard(self) -> dict:
         now = self.clock()
-        due = set(self.scheduler.due_skills(now))
+        due = {
+            skill_id for skill_id in self.scheduler.due_skills(now)
+            if self._pack_practice_enabled(skill_id)
+        }
         frontier = set(self.frontier())
         recommended_task = self._review_or_lesson(now)
         recommended_action = (
@@ -772,6 +808,7 @@ class Tutor:
                 skill_id for skill_id, state in self.states.items()
                 if state.mastered and state.due is not None
                 and now < state.due <= upcoming_review_limit
+                and self._pack_practice_enabled(skill_id)
             ),
             key=lambda skill_id: self.states[skill_id].due or 0,
         )

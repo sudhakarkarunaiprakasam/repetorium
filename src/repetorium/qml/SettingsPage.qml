@@ -397,7 +397,7 @@ ScrollView {
                 objectName: "contentPackModeDescription"
                 text: root.packState.mode === "none"
                     ? "No content packs are installed. Import a pack from Library to begin practicing."
-                    : "Choose one or more installed packs. Selected pack goals add up to your lessons-per-week goal. Changing packs ends the current session; progress is preserved."
+                    : "Choose one or more installed packs. Selected pack goals add up to your lessons-per-week goal; a goal of 0 pauses lessons and reviews from that pack. Changing packs ends the current session; progress is preserved."
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
                 color: root.brandPalette.mutedForeground
